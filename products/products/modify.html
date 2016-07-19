@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Assignment2</title>
+<script type="text/javascript" src="/scripts/regex.js"></script>
+<script type="text/javascript">
+function register_chk(){
+
+	var register_form = document.vForm;
+	var name = register_form.name.value;
+	var price = register_form.price.value;
+	
+	if( ! regex_check("name", name)){
+		alert('Please check product name');
+		return false;
+	}
+	if( ! regex_check("num", price)){
+		alert('Please check product price');
+		return false;
+	}
+	
+	register_form.submit();
+}
+</script>
+</head>
+<body>
+	<form name="vForm" method="post" action="/products/products/modify.php"
+		style="margin: 0; padding: 0">
+		<input type="hidden" value="<?php echo $_GET['idx'];?>" name="idx">
+		<table width="600" border="0" cellpadding="0" cellspacing="0" align="center">
+			<tr>
+				<td colspan="3" align="center"><h3>Modify Product</h3></td>
+			</tr>
+			<tr style="background-color: #e4eefe">
+				<td height="30" width="180">
+					<font color="red">*</font> Name :
+				</td>
+				<td width="250" colspan="2">
+					<input type="text" name="name" value="<?php echo $res['list'][0]['name']?>">
+				</td>
+			</tr>
+			<tr>
+				<td height="30">
+					<font color="red">*</font> Category :
+				</td>
+				<td colspan="2">
+					<select name="category">
+						<?php foreach ($res['category'] As $key => $val){?>
+						<option value="<?php echo $val['idx']?>" <?php if($val['idx'] == $res['list'][0]['category']) echo 'selected';?>><?php echo $val['name']?></option>
+						<?php }?>
+					</select>
+				</td>
+			</tr>
+			<tr style="background-color: #e4eefe">
+				<td height="30">
+					<font color="red">*</font> Price :
+				</td>
+				<td colspan="2">
+					<input type="text" name="price" value="<?php echo $res['list'][0]['price']?>">
+				</td>
+			</tr>
+			
+			<tr align="center">
+				<td colspan="3" height="60">
+					<input type="button" value="Modification" onclick="register_chk();"/>
+					<input type="reset" value="Cancel"/>
+					<input type="button" value="Go Home" onclick="location.href='/';"/>
+				</td>
+			</tr>
+		</table>
+		<hr>
+	</form>
+
+</body>
+</html>

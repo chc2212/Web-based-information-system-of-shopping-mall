@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+function goModify(elem){
+	location.href = '/login/modify.php?idx='+elem.id;
+
+}
+
+function goDelete(elem){
+	var msg = 'Would you really delete this user?';
+	if(confirm(msg)){
+		location.href = '/login/delete.php?idx='+elem.id;
+	}
+	
+}
+
+</script>
+<body>
+
+	<table width="600" border="1" cellpadding="0" cellspacing="0" align="center" >
+		<caption>User Information</caption>
+		<tr>
+			<th>Index</th>
+			<th>ID</th>
+			<th>FirstName</th>
+			<th>LastName</th>
+			<th>Age</th>
+			<th>Salary</th>
+			<th>Modify</th>
+			<th>Delete</th>
+		</tr>
+		<?php foreach ($res['list'] As $key => $val){?>
+		<tr>
+			<td align="center"><?php echo $val['idx']?></td>
+			<td align="center"><?php echo $val['user_id']?></td>
+			<td align="center"><?php echo $val['first_name']?></td>
+			<td align="center"><?php echo $val['last_name']?></td>
+			<td align="center"><?php echo $val['age']?></td>
+			<td align="center"><?php echo $val['salary']?></td>
+			<td align="center">
+				<input type="button" value="Modification" onclick="goModify(this);" id="<?php echo $val['idx'];?>"/>
+			</td>
+			<td align="center">
+				<input type="button" value="Deletion" onclick="goDelete(this);" id="<?php echo $val['idx']?>"/>
+			</td>
+		</tr>
+		<?php }?>
+	
+	</table>
+</body>
+</html>

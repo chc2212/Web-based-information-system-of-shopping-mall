@@ -1,0 +1,150 @@
+<?php
+//namespace db;
+class Mysql extends CI_Model {
+	var $Database = "com_play";
+	var $Host = "localhost";
+	var $User = "root";
+	var $Password = "12345";
+
+	var $Link_ID = 0;
+	var $Query_ID = 0;
+	var $Record = array();
+	var $Row;
+
+	var $Errno = 0;
+	var $Error = "";
+
+	var $debug_addr = "";
+
+
+	function __construct( $debug_addr = '' ){
+		$this->debug_addr = $debug_addr;
+	}
+
+	private function connect() {
+		if ( !$this->Link_ID ) {
+			$this->Link_ID = mysqli_connect( $this->Host, $this->User, $this->Password, $this->Database );
+			if ( !$this->Link_ID ) {
+				$this->halt("Link-ID == false, pconnect failed");
+			}
+			if ( !mysqli_query( $this->Link_ID, sprintf("use %s",$this->Database) ) ) {
+				$this->halt("cannot use database ".$this->Database);
+			}
+			mysqli_query( $this->Link_ID, "SET NAMES 'utf8'" );
+		}
+	}
+
+	public function query( $query_str ) {
+		$this->connect();
+		$this->Query_ID = mysqli_query( $this->Link_ID, $query_str );
+		$this->Row = 0;
+		$this->Errno = mysqli_errno( $this->Link_ID );
+		$this->Error = mysqli_error( $this->Link_ID );
+		if( !$this->Query_ID ) {
+			$this->halt("SQL Syntax error. (".$query_str.")");
+		}
+		return $this->Query_ID;
+	}
+
+	public function q($query_str){
+		$this->connect();
+		$this->Query_ID = mysqli_query( $this->Link_ID, $query_str );
+		$this->Row = 0;
+		$this->Errno = mysqli_errno( $this->Link_ID );
+		$this->Error = mysqli_error( $this->Link_ID );
+		if( !$this->Query_ID ) {
+			$this->halt("SQL Syntax error. (".$query_str.")");
+			return false;
+		}
+		return $this;
+	}
+
+	public function my_escape_string($str){
+
+		$this->connect();
+		return mysqli_real_escape_string($this->Link_ID, $str);
+	}
+
+	public function nfa(){
+		return $this->next_fetch_array();
+	}
+
+	public function nfo(){
+		return $this->next_fetch_object();
+	}
+
+	public function fetch_all_arrays(){
+		$tmp2=array();
+		while($tmp=$this->nfa()){
+			$tmp2[]=$tmp;
+		}
+		return $tmp2;
+	}
+
+	public function fetch_all_objects(){
+		$tmp2=array();
+		while($tmp=$this->nfo()){
+			$tmp2[]=$tmp;
+		}
+		return $tmp2;
+	}
+
+
+	public function next_fetch_array(){
+		if(!$this->Link_ID) return false;
+		$this->Record = mysqli_fetch_array($this->Query_ID);
+		$this->Errno = mysqli_errno( $this->Link_ID );
+		$this->Error = mysqli_error( $this->Link_ID );
+	
+		$stat = is_array( $this->Record );
+		if (!$stat) {
+			mysqli_free_result( $this->Query_ID );
+			$this->Query_ID = 0;
+		}
+		return $this->Record;
+	}
+
+
+	public function next_fetch_object(){
+		if(!$this->Link_ID) return false;
+
+		$this->Record = @mysqli_fetch_object($this->Query_ID);
+		$this->Errno = mysqli_errno( $this->Link_ID );
+		$this->Error = mysqli_error( $this->Link_ID );
+		$stat = is_object($this->Record);
+		if (!$stat) {
+			mysqli_free_result($this->Query_ID);
+			$this->Query_ID = 0;
+		}
+		return $this->Record;
+	}
+
+
+	public function affected_rows() {
+		return mysqli_affected_rows($this->Link_ID);
+	}
+
+	public function escape_string( $query ) {
+		$this->connect();
+		return mysqli_escape_string($this->Link_ID, $query);
+	}
+
+	public function insert_id() {
+		return mysqli_insert_id( $this->Link_ID );
+	}
+
+
+	private function halt($msg) {
+		if( $_SERVER['REMOTE_ADDR'] == $this->debug_addr ){
+			$call = $_SERVER['PHP_SELF'];
+			echo "<pre>";
+			echo "<b>DB Error occurred.</b>\n";
+			echo "<b>- msg : </b>".$msg."\n";
+			echo "<b>- code : </b>".$this->Errno." (".$this->Error.")\n";
+			echo "<b>- call : </b>".$call."\n";
+			echo "</pre>";
+			die("<pre>DB Close.</pre>");
+		}
+	}
+}
+?>

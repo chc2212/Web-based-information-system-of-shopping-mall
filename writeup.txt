@@ -1,0 +1,44 @@
+URL : http://cs-server.usc.edu:31239
+
+Firstly, you should import com_play.sql
+
+- Login Information
+administrator : ID(admin01), Password(1111)
+manager : ID(manager01), Password(1111)
+employee : ID(user01), Password(1111)
+
+
+
+DB Structure
+
+1. play_user : 
+ 1) idx(primary key) - int
+ 2) user_id : user ID - varchar(30)
+ 3) password : user password - varchar(30)
+ 4) first_name : first_name - varchar(20)
+ 5) last_name : last_name - varchar(20)
+ 6) age : user age - smallint
+ 7) salary : user salary - int
+ 8) type : user (1:salesman, 5: manager, 9: administrator) - smallint
+ 9) reg_time : registration time
+
+2. play_product : product management table
+ 1) idx(primary key) - int
+ 2) name : product name - varchar(50)
+ 3) category : product category  - tinyint
+ 4) price - int
+ 5) reg_time : registration time
+
+3. play_product_category : product category table
+ 1) idx(primary key) - int
+ 2) name : category name - varchar(30)
+ 3) reg_time : registration time
+
+4. play_product_sales : special sale table
+ 1) idx(primary key) - int
+ 2) gidx : index (reference from idx of play_product) - int
+ 3) rate : sales rate - smallint
+ 4) sale_start - date
+ 5) sale_end - date
+ 6) reg_time: registration time
+

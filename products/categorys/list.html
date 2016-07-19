@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+function goModify(elem){
+	location.href = '/products/categorys/modify.php?idx='+elem.id;
+}
+
+function goDelete(elem){
+	var msg = 'Would you really delete this product?';
+	if(confirm(msg)){
+		location.href = '/products/categorys/delete.php?idx='+elem.id;
+	}
+	
+}
+</script>
+<body>
+	<div style="text-align: right; margin-right: 20px;">
+		<input type="button" value="Add Products-Category" onclick="location.href='/products/categorys/add.php'"/>
+	</div>
+	<table width="600" border="1" cellpadding="0" cellspacing="0" align="center" >
+		<caption>Products-Categorys Lists</caption>
+		<tr>
+			<th>Index</th>
+			<th>Name</th>
+			<th>Modify</th>
+			<th>Delete</th>
+		</tr>
+		<?php foreach ($res['list'] As $key => $val){?>
+		<tr>
+			<td align="center"><?php echo $val['idx']?></td>
+			<td align="center"><?php echo $val['name']?></td>
+			<td align="center">
+				<input type="button" value="Modification" onclick="goModify(this);" id="<?php echo $val['idx'];?>"/>
+			</td>
+			<td align="center">
+				<input type="button" value="Deletion" onclick="goDelete(this);" id="<?php echo $val['idx']?>"/>
+			</td>
+		</tr>
+		<?php }?>
+	
+	</table>
+</body>
+</html>

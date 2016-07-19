@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	ul{
+		
+	}
+	.nav-menu li{
+		display:inline-block;
+		padding:15px;
+	}
+
+</style>
+<script type="text/javascript">
+function logout(){
+	location.href='/login/logout.php';
+}
+</script>
+</head>
+<body>
+	<div>
+	<form action="/login/check.php" method="POST">
+		<div style="text-align:right;">
+			<?php if($_SESSION['auth']){?>
+			<div style="display:inline-block;">
+				<p><?php echo $_SESSION['name']?></p>
+			</div>
+			<?php }else{?>
+			<div style="display:inline-block;">
+				<label for="id">ID</label>
+				<input type="text" id="id" name="id"/>
+			</div>
+			<div style="display:inline-block;">
+				<label for="pass">Password</label>
+				<input type="password" id="pass" name="password"/>
+			</div>
+			<?php }?>
+			<div style="display:inline-block;">
+				<?php if(! $_SESSION['auth']){?>
+				<input type="submit" value="Login"/>
+				<?php } else{?>
+				<input type="button" value="Logout" onclick="logout();"/>
+				<?php }?>
+				<?php if($_SESSION['auth'] == 9){?>
+				<input type="button" value="Register-User" onclick="location.href='/login/register.php';"/>
+				<input type="button" value="Information-User" onclick="location.href='/login/list.php';"/>
+				<?php }?>
+			</div>
+		</div>
+	</form>
+	 	<h3 style="text-align:center;">Sports ShoppingMall</h3>
+	 	<div class="nav-menu">
+	 		<ul style="list-style:none; ">
+	 			<?php if($_SESSION['auth'] == 1){?>
+	 			<li><a href="/products/products/list.php">Products</a></li>
+	 			<li><a href="/products/categorys/list.php">Products-Categorys</a></li>
+	 			<?php }?>
+	 			<?php if($_SESSION['auth'] == 5){?>
+	 			<li><a href="/reports/products.php">Reports-Products</a></li>
+	 			<li><a href="/reports/users.php">Reports-Users</a></li>
+	 			<li><a href="/reports/sales.php">Reports-SpecialSales</a></li>
+	 			<?php }?>
+	 		</ul>
+	 	</div>
+	</div>
+
+</body>
+</html>
