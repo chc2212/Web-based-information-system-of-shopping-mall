@@ -1,5 +1,5 @@
 # Web-based-information-system-of-shopping-mall
-This is a project for "Web Technologies" lecture. It is a shopping mall website similar to Amazon.com to manage products, employees, and customers using PHP, HTML, CSS, JavaScript, JQuery, CodeIgniter and MySQL. This website includes a sign-in system, product search system with diverse condition, shopping cart system and order management system. 
+This is a project for "Web Technologies" lecture. It is a shopping mall website similar to Amazon.com to manage products, employees, and customers using PHP, HTML, CSS, JavaScript, JQuery, CodeIgniter and MySQL. This website includes a sign-in system, product search system with diverse condition, shopping cart system and order management system.  
 
 #System Requriment
 ###Server side (Employee side)
