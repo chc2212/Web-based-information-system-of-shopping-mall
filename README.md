@@ -1,8 +1,8 @@
 # Web-based-information-system-of-shopping-mall
 This is a project for "Web Technologies" lecture. It is a shopping mall website similar to Amazon.com to manage products, employees, and customers using PHP, HTML, CSS, JavaScript, JQuery, CodeIgniter and MySQL. This website includes a sign-in system, product search system with diverse condition, shopping cart system and order management system.  
 
-#System Requriment
-###Server side (Employee side)
+# System Requriment
+### Server side (Employee side)
 1. A login page for employees that establishes a logon session variable in PHP to keep track of the user. This logon session variable MUST time out - for security reasons. There are 3 types of employees: (1) administrators that can only create, modify, and delete user IDs and passwords, (2) managers that only view reports, and (3) sales managers that can add, modify, and delete, products and product categories. 
 2. You are to have a set of HTML pages to allow your employees to manage your web site data. I like to call this the administrative side of a web site. You need at least the following:
 
@@ -19,7 +19,7 @@ This is a project for "Web Technologies" lecture. It is a shopping mall website 
 6. Create a WRITEUP file that describes your web site, how it works, your database (including field names, field types and sizes). Include names and descriptions of each HTML page and each PHP script.
 7. Lastly, you are to use AJAX where it makes sense. AJAX can considerably improve the user's experience with your web site.
 
-###Customer side
+### Customer side
 1. A login page for customers that establishes a logon session variable in PHP to keep track of the user. This logon session variable MUST time out - for security reasons.
 2. Whatever scheme you want to come up with to allow users to order/view your products and services, it must include a shopping cart. You need to ask for enough information that you can 'send' the ordered items to the customer - so all customer address information is needed - and that the customer can pay for what they ordered (use a credit card, for instance).
 3. An ability to display the shopping cart during the ordering process.
